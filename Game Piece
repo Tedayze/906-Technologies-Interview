@@ -1,0 +1,22 @@
+package chesspuzzles;
+
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+public abstract class GamePiece {
+	
+	public boolean isOnBoard(GameBoard aBoard, Point aPoint){
+		return aPoint.x >= 0 && aPoint.x < aBoard.size() 
+				&& aPoint.y >= 0 && aPoint.y < aBoard.size();
+	}
+	
+	BufferedImage image;
+	
+	public BufferedImage getImage(){
+		return image;
+	}
+
+	public abstract List<GameMove> nextMoves(GameBoard board, Point aLocation);
+		
+}
