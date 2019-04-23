@@ -1,0 +1,24 @@
+package chesspuzzles;
+
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Knight extends GamePiece {
+
+	@Override
+	public List<GameMove> nextMoves(GameBoard board, Point aLocation) {
+		int[] rowOffsets = {2,2,1,-1,-2,-2,-1,1};
+		int[] colOffsets = {-1,1,2,2,1,-1,-2,-2};
+		List<GameMove> nextMoves = new ArrayList<GameMove>();
+		for (int i = 0; i < 8; ++i){
+			Point newPoint = new Point(aLocation.x + rowOffsets[i], aLocation.y + colOffsets[i]);
+			if(isOnBoard(board, newPoint)){
+				GameMove move = new GameMove(this, aLocation, newPoint);
+				nextMoves.add(move);
+			}
+		}
+		return nextMoves;
+	}
+
+}
