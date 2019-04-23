@@ -1,0 +1,47 @@
+package chesspuzzles;
+
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
+public class KnightsTourSolver extends PuzzleSolver {
+	
+	public KnightsTourSolver(GameBoard aBoard){
+		board = aBoard;
+	}
+
+	@Override
+	public boolean hasSolvedPuzzle() {
+		return moves.size() == board.size() * board.size();
+	}
+
+	@Override
+	public List<GameMove> getNextLegalMoves() {
+		List<GameMove> nextLegalMoves = new ArrayList<GameMove>();
+		if(moves.isEmpty()){
+			GameMove firstMove = new GameMove(new Knight(), null, new Point(0,0));
+			nextLegalMoves.add(firstMove);
+			return nextLegalMoves;
+		}
+		
+		GameMove lastMove = moves.get(moves.size()-1);
+		Point loc = lastMove.getTo();
+		List<GameMove> nextMoves = lastMove.getPiece().nextMoves(board, loc);
+
+		for(GameMove eachMove: nextMoves){
+			if(!hasVisited(eachMove.getTo())){
+				nextLegalMoves.add(eachMove);
+			}
+		}
+		return nextLegalMoves;
+	}
+	
+	public boolean hasVisited(Point aPoint){
+		for(GameMove eachMove: moves){
+			if(eachMove.getTo().equals(aPoint)){
+				return true;
+			}
+		}
+		return false;
+	}
+}
