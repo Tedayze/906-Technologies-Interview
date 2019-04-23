@@ -1,0 +1,33 @@
+package chesspuzzles;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class PuzzleSolver {
+	protected GameBoard board;
+	protected List<GameMove> moves = new ArrayList<GameMove>();
+	
+	public List<GameMove> getMoves(){
+		return moves;
+	}
+	
+	public boolean solve(){
+		if(hasSolvedPuzzle()){
+			return true;
+		}
+		List<GameMove> nextMoves = getNextLegalMoves();
+		for(GameMove eachMove : nextMoves){
+			eachMove.doIt(board);
+			moves.add(eachMove);
+			if(solve()){
+				return true;
+			}
+			eachMove.undoIt(board);
+			moves.remove(eachMove);
+		}
+		return false;
+	}
+	
+	public abstract boolean hasSolvedPuzzle();
+	public abstract List<GameMove> getNextLegalMoves();
+}
