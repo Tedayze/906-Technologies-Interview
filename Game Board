@@ -1,59 +1,50 @@
 package chesspuzzles;
 
+import java.awt.Color;
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
-public class NQueensSolver extends PuzzleSolver {
+
+public class GameBoard {
 	
-	public NQueensSolver(GameBoard aBoard){
-		board = aBoard;
-	}
-
-	@Override
-	public boolean hasSolvedPuzzle() {
-		return moves.size() == board.size();
-	}
-
-	@Override
-	public List<GameMove> getNextLegalMoves() {
-		int row = moves.size();
-		List<Point> points = new ArrayList<Point>();
-		for(int col = 0; col < board.size(); ++col){
-			Point aPoint = new Point(row,col);
-			points.add(aPoint);
-		}
-		//Note: it suffices to find moves one row at a time.
-		//Note: number of moves is same as index of next row.
-		List<GameMove> nextMoves = new ArrayList<GameMove>();
-		for(Point eachPoint: points ){
-			if(isSafe(eachPoint)){
-				Queen queen = new Queen();
-				GameMove aMove = new GameMove(queen, null, eachPoint);
-				nextMoves.add(aMove);
+	public int size;
+	private GameSquare[][] board;
+	
+	public GameBoard(int boardSize, Color darkSquare, Color lightSquare){
+		size = boardSize;
+		board = new GameSquare[boardSize][boardSize];
+		for(int row = 0; row < boardSize; ++row){
+			for(int column = 0; column < boardSize; ++column){
+				Color requiredColor = (row+column)%2 == 0 
+						? darkSquare
+						: lightSquare;
+				board[row][column] = new GameSquare(requiredColor);
 			}
 		}
-		return nextMoves;
+			
 	}
 	
-	public boolean isSafe(Point aPoint){
-		for(GameMove eachMove: moves)
-			if(isThreatenedByQueenAt(aPoint, eachMove.getTo())){
-				return false;
-			}
-		return true;
+	public void placePieceAt(GamePiece aPiece, Point aPoint){
+		board[(int) aPoint.getX()][(int) aPoint.getY()].place(aPiece);
 	}
 	
-	public boolean isThreatenedByQueenAt(Point newPoint, Point queenPoint){
-		if(newPoint.x == queenPoint.x || newPoint.y == queenPoint.y){
-			return true;
-		}
-		if(Math.abs(newPoint.y - queenPoint.y) == Math.abs(newPoint.x - queenPoint.x)){
-			return true;
-		}
-		else{
-			return false;
-		}
+	public GameSquare getSquare(Point aPoint){
+		return board[(int) aPoint.getX()][(int) aPoint.getY()];
 	}
-
+	
+	public GamePiece getPieceAt(Point aPoint){
+		return board[(int) aPoint.getX()][(int) aPoint.getY()].getPiece();
+	}
+	
+	public boolean isEmptyAt(Point aPoint){
+		return board[(int) aPoint.getX()][(int) aPoint.getY()].isEmpty();
+	}
+	
+	public GamePiece removePieceAt(Point aPoint){
+		return board[(int) aPoint.getX()][(int) aPoint.getY()].removePiece(board[(int) aPoint.getX()][(int) aPoint.getY()].getPiece());
+	}
+	
+	public int size(){
+		return size;
+	}
+	
 }
