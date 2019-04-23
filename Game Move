@@ -1,0 +1,53 @@
+package chesspuzzles;
+
+import java.awt.Point;
+import java.io.StringWriter;
+
+public class GameMove {
+	GamePiece piece;
+	Point to;
+	Point from;
+	
+	public GameMove(GamePiece aPiece, Point startPoint, Point endPoint){
+		piece = aPiece;
+		to = endPoint;
+		from = startPoint;
+	}
+	
+	public void doIt(GameBoard aBoard){
+		if(from != null){
+			aBoard.removePieceAt(from);
+		}
+		aBoard.placePieceAt(piece, to);
+		
+	}
+	
+	public void undoIt(GameBoard aBoard){
+		aBoard.removePieceAt(to);
+		if (from != null){
+			aBoard.placePieceAt(piece, from);
+		}
+	}
+	
+	public Point getTo(){
+		return to;
+	}
+	
+	public GamePiece getPiece(){
+		return piece;
+	}
+	
+	@Override
+	public String toString(){
+		StringWriter writer = new StringWriter();
+		if(from==null){
+			writer.append("Place piece");
+		}
+		else{
+			writer.append(from.toString());
+			writer.append("-->");
+		}
+		writer.append(to.toString());
+		return writer.toString();
+	}
+}
