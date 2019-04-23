@@ -1,0 +1,56 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+double calculator(double price, int sold, double percentage)
+{
+	double profit = 0;
+	profit = ((price*sold)*(percentage/100));
+	return profit;
+}
+double calculator2(double price,double price2, int sold, int sold2)
+{
+	double total_profit = 0;
+	total_profit = ((price*sold)+(price2*sold2));
+	return total_profit;
+}
+int main()
+{
+	double vampPrice = 1.99;
+	double seaPrice = 2.99;
+	int vampSold;
+	int seaSold;
+	double p1;
+	double p2;
+
+	cout << "==========[Halloween Profit Calculator]==========" << endl;
+
+	cout << "How many Vampire Hunter sets are sold?" << endl;
+	cin >> vampSold;
+	cout << "Percentage Yield? (NOTE: Steam 50% , Nelson 25%, Us 25%)" << endl;
+	cin >> p1;
+
+	cout << "How many Scourge of the Sea sets are sold?" << endl;
+	cin >> seaSold;
+	cout << "Percentage Yield? (NOTE: Steam 50% , Nelson 25%, Us 25%)" << endl;
+	cin >> p2;
+
+
+	double vampProfit = calculator(vampPrice, vampSold, p1);
+	double seaProfit = calculator(seaPrice, seaSold, p2);
+	double totalProfit = (vampProfit + seaProfit);
+
+
+	cout << "Profit from Vampire Hunter set = $" << vampProfit << endl;
+	cout << "Profit from Scourge of the Sea set = $" << seaProfit << endl;
+	cout << "Total profit = $" << totalProfit << endl;
+
+	double netProfit = calculator2(vampPrice, seaPrice, vampSold, seaSold);
+
+	cout << "Net profit before Percentage Yield = $" << netProfit << endl;
+
+	while (1 > 0)
+	{
+
+	}
+}
