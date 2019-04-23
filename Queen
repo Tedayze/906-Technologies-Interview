@@ -1,0 +1,14 @@
+package chesspuzzles;
+
+import java.awt.Point;
+import java.util.List;
+
+public class Queen extends GamePiece {
+
+	@Override
+	public List<GameMove> nextMoves(GameBoard board, Point aLocation) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
